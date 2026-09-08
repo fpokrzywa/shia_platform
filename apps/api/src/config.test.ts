@@ -37,3 +37,9 @@ test('release web root is explicit and does not change the test-build default',(
  assert.equal(loadConfig({loadEnvFiles:false,cwd:'C:/shi',env:{DATABASE_URL:'postgresql://localhost/shi',WEB_ROOT:'work/release-web'}}).webRoot,'C:\\shi\\work\\release-web');
  assert.equal(loadConfig({loadEnvFiles:false,env:{DATABASE_URL:'postgresql://localhost/shi'}}).webRoot,undefined);
 });
+
+test("PUBLIC_ORIGIN accepts and normalizes only a bare HTTP(S) origin", () => {
+  const base = { DATABASE_URL: "postgresql://localhost/shi" };
+  assert.equal(loadConfig({ loadEnvFiles: false, env: { ...base, PUBLIC_ORIGIN: "https://Example.test:443" } }).publicOrigin, "https://example.test");
+  for (const value of ["ftp://example.test", "https://user@example.test", "https://example.test/path", "https://example.test/?x=1", "https://example.test/#x", "not a URL"]) assert.throws(() => loadConfig({ loadEnvFiles: false, env: { ...base, PUBLIC_ORIGIN: value } }), ConfigurationError);
+});

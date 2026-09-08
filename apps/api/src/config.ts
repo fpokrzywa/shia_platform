@@ -9,6 +9,7 @@ export interface AppConfig {
   webRoot?: string;
   migrationsDir?: string;
   sessionSecret?: string;
+  publicOrigin?: string;
 }
 
 export class ConfigurationError extends Error {
@@ -57,6 +58,18 @@ function parseDatabaseUrl(value: string): string {
   return value;
 }
 
+function parsePublicOrigin(value: string | undefined): string | undefined {
+  if (!value?.trim()) return undefined;
+  let parsed: URL;
+  try { parsed = new URL(value.trim()); } catch {
+    throw new ConfigurationError("PUBLIC_ORIGIN must be a valid HTTP or HTTPS origin");
+  }
+  if ((parsed.protocol !== "http:" && parsed.protocol !== "https:") || parsed.username || parsed.password || parsed.pathname !== "/" || parsed.search || parsed.hash) {
+    throw new ConfigurationError("PUBLIC_ORIGIN must contain only an HTTP or HTTPS scheme and host");
+  }
+  return parsed.origin;
+}
+
 export function loadConfig(options: {
   env?: NodeJS.ProcessEnv;
   cwd?: string;
@@ -66,6 +79,7 @@ export function loadConfig(options: {
   if (options.loadEnvFiles !== false) loadEnvironmentFiles(cwd);
   const env = options.env ?? process.env;
   const sessionSecret = env.SESSION_SECRET?.trim();
+  const publicOrigin = parsePublicOrigin(env.PUBLIC_ORIGIN);
   if (sessionSecret && sessionSecret.length < 16) {
     throw new ConfigurationError("SESSION_SECRET must be at least 16 characters when provided");
   }
@@ -76,6 +90,7 @@ export function loadConfig(options: {
     storageDir: path.resolve(cwd, env.STORAGE_DIR?.trim() || "data"),
     ...(env.MIGRATIONS_DIR?.trim() ? {migrationsDir:path.resolve(cwd,env.MIGRATIONS_DIR.trim())} : {}),
     ...(env.WEB_ROOT?.trim() ? {webRoot:path.resolve(cwd,env.WEB_ROOT.trim())} : {}),
-    ...(sessionSecret ? { sessionSecret } : {})
+    ...(sessionSecret ? { sessionSecret } : {}),
+    ...(publicOrigin ? { publicOrigin } : {}),
   };
 }

@@ -25,6 +25,7 @@ import type { EngagementRole } from "../../../packages/persistence/src/workspace
 import { SampleService } from "../../../packages/persistence/src/workspace/samples.js";
 import { WorkService } from "../../../packages/persistence/src/workspace/work.js";
 import { ReadinessService } from "../../../packages/persistence/src/workspace/readiness.js";
+import { requestOriginAllowed } from "./request-origin.js";
 
 function json(response: ServerResponse, status: number, body: unknown): void {
   response.writeHead(status, {
@@ -92,6 +93,7 @@ export async function handleWorkspaceRequest(
   request: IncomingMessage,
   response: ServerResponse,
   pool: ClientPool,
+  publicOrigin?: string,
 ): Promise<boolean> {
   const pathname = new URL(request.url ?? "/", "http://localhost").pathname;
   if (
@@ -106,15 +108,7 @@ export async function handleWorkspaceRequest(
     return true;
   }
   if (method === "POST") {
-    const secure = Boolean(
-      (request.socket as typeof request.socket & { encrypted?: boolean })
-        .encrypted,
-    );
-    const expected = `${secure ? "https" : "http"}://${request.headers.host}`;
-    if (
-      request.headers["sec-fetch-site"] === "cross-site" ||
-      (request.headers.origin && request.headers.origin !== expected)
-    ) {
+    if (!requestOriginAllowed(request, publicOrigin)) {
       json(response, 403, { error: "Request origin is not allowed." });
       return true;
     }

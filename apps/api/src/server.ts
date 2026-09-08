@@ -26,6 +26,7 @@ export interface ServerDependencies {
   logger?: Logger;
   webRoot?: string;
   expectedMigrations?: MigrationFile[];
+  publicOrigin?: string;
 }
 
 function respond(
@@ -80,8 +81,8 @@ export function createApiServer(dependencies: ServerDependencies): Server {
       try {
         if ("connect" in dependencies.pool) {
           const pool = dependencies.pool as ClientPool;
-          if (await handleAuthRequest(request, response, pool)) return;
-          if (await handleWorkspaceRequest(request, response, pool)) return;
+          if (await handleAuthRequest(request, response, pool, dependencies.publicOrigin)) return;
+          if (await handleWorkspaceRequest(request, response, pool, dependencies.publicOrigin)) return;
         }
         if (
           await serveWeb(
@@ -121,6 +122,7 @@ export async function startApplication(
     expectedMigrations,
     ...(dependencies?.logger ? { logger: dependencies.logger } : {}),
     ...(config.webRoot ? { webRoot: config.webRoot } : {}),
+    ...(config.publicOrigin ? { publicOrigin: config.publicOrigin } : {}),
   });
   await new Promise<void>((resolve, reject) => {
     const onError = (error: Error) => {

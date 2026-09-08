@@ -38,8 +38,8 @@ function fakePool(user: User): ClientPool & { sessions: Session[] } {
   return { query, connect: async () => ({ query, release() {} }) as never, end: async () => {}, sessions, createdUsers } as ClientPool & { sessions: Session[]; createdUsers: User[] };
 }
 
-async function start(pool: ClientPool) {
-  const server = createServer((req, res) => void handleAuthRequest(req, res, pool).then((handled) => {
+async function start(pool: ClientPool, publicOrigin?: string) {
+  const server = createServer((req, res) => void handleAuthRequest(req, res, pool, publicOrigin).then((handled) => {
     if (!handled) { res.statusCode = 404; res.end(); }
   }));
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
@@ -47,6 +47,17 @@ async function start(pool: ClientPool) {
   if (!address || typeof address === "string") throw new Error("missing address");
   return { server, origin: `http://127.0.0.1:${address.port}` };
 }
+
+test("configured HTTPS origin permits proxy login and issues and clears Secure cookies", async () => {
+  const password = "correct horse battery staple", pool = fakePool({ id: "proxy-user", email: "proxy@example.com", display_name: "Proxy User", password_hash: await hashPassword(password), role: "member", disabled_at: null }), publicOrigin = "https://shi.example.test";
+  const { server, origin } = await start(pool, publicOrigin);
+  try {
+    const login = await fetch(`${origin}/api/v1/auth/login`, { method: "POST", headers: { origin: publicOrigin, "content-type": "application/json" }, body: JSON.stringify({ email: "proxy@example.com", password }) });
+    assert.equal(login.status, 200); const setCookie = login.headers.get("set-cookie") ?? ""; assert.match(setCookie, /; Secure/); const cookie = setCookie.split(";")[0] ?? "";
+    assert.equal((await fetch(`${origin}/api/v1/auth/logout`, { method: "POST", headers: { origin: "https://other.example", cookie } })).status, 403);
+    const logout = await fetch(`${origin}/api/v1/auth/logout`, { method: "POST", headers: { origin: publicOrigin, cookie } }); assert.equal(logout.status, 204); assert.match(logout.headers.get("set-cookie") ?? "", /Max-Age=0; Secure/);
+  } finally { await new Promise<void>((resolve) => server.close(() => resolve())); }
+});
 
 test("login issues an opaque HttpOnly strict cookie and session resolves the actor", async () => {
   const password = "correct horse battery staple";

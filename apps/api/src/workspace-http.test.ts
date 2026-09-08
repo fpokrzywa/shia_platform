@@ -85,3 +85,15 @@ test("workspace mutation rejects cross-origin requests before authentication or 
     await new Promise<void>((resolve) => server.close(() => resolve()));
   }
 });
+
+test("workspace mutations use configured public origin behind an HTTPS proxy", async () => {
+  const pool = { query: async () => { throw new Error("Unexpected query"); }, connect: async () => { throw new Error("Unexpected connection"); }, end: async () => {} } as unknown as ClientPool;
+  const publicOrigin = "https://shi.example.test", server = createApiServer({ pool, publicOrigin });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve)); const address = server.address(); assert(address && typeof address !== "string");
+  try {
+    const url = `http://127.0.0.1:${address.port}/api/practice/self-start`, body = { method: "POST", headers: { origin: publicOrigin, "content-type": "application/json" }, body: "{}" } as const;
+    assert.equal((await fetch(url, body)).status, 401);
+    assert.equal((await fetch(url, { ...body, headers: { ...body.headers, origin: "https://other.example" } })).status, 403);
+    assert.equal((await fetch(url, { ...body, headers: { ...body.headers, "sec-fetch-site": "cross-site" } })).status, 403);
+  } finally { await new Promise<void>((resolve) => server.close(() => resolve())); }
+});

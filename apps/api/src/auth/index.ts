@@ -3,6 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { ClientPool } from "../../../../packages/persistence/src/index.js";
 import { hashPassword, verifyPassword } from "./password.js";
 import { createSession, readSessionToken, resolveActor, revokeSession, SESSION_COOKIE, SESSION_TTL_SECONDS, type AccountRole, type Actor } from "./sessions.js";
+import { requestOriginAllowed, requestUsesSecureCookies } from "../request-origin.js";
 
 const BODY_LIMIT = 16 * 1024;
 const ATTEMPT_WINDOW_MS = 15 * 60 * 1000;
@@ -38,16 +39,6 @@ async function readJson(request: IncomingMessage): Promise<Record<string, unknow
     if (error instanceof Error && error.message === "BODY_TOO_LARGE") throw error;
     throw new Error("INVALID_JSON");
   }
-}
-
-function sameOrigin(request: IncomingMessage): boolean {
-  if (request.headers["sec-fetch-site"] === "cross-site") return false;
-  const origin = request.headers.origin;
-  if (!origin) return true;
-  const host = request.headers.host;
-  if (!host) return false;
-  const secure = Boolean((request.socket as typeof request.socket & { encrypted?: boolean }).encrypted);
-  return origin === `${secure ? "https" : "http"}://${host}`;
 }
 
 function clientIp(request: IncomingMessage): string {
@@ -87,7 +78,7 @@ export async function resolveRequestActor(request: IncomingMessage, pool: Client
   return resolveActor(pool, readSessionToken(request.headers.cookie));
 }
 
-export async function handleAuthRequest(request: IncomingMessage, response: ServerResponse, pool: ClientPool): Promise<boolean> {
+export async function handleAuthRequest(request: IncomingMessage, response: ServerResponse, pool: ClientPool, publicOrigin?: string): Promise<boolean> {
   const method = request.method ?? "GET";
   const path = new URL(request.url ?? "/", "http://localhost").pathname;
   const authPath = path.startsWith("/api/v1/auth/");
@@ -98,7 +89,7 @@ export async function handleAuthRequest(request: IncomingMessage, response: Serv
     respond(response, actor ? 200 : 401, actor ? { data: { actor } } : { error: { code: "UNAUTHENTICATED", message: "Authentication required" } });
     return true;
   }
-  if (method === "POST" && !sameOrigin(request)) {
+  if (method === "POST" && !requestOriginAllowed(request, publicOrigin)) {
     respond(response, 403, { error: { code: "ORIGIN_REJECTED", message: "Request origin is not allowed" } });
     return true;
   }
@@ -131,13 +122,13 @@ export async function handleAuthRequest(request: IncomingMessage, response: Serv
     }
     const session = await createSession(pool, user.id);
     const actor: Actor = { id: user.id, email: user.email, displayName: user.display_name, role: user.role };
-    const secure = Boolean((request.socket as typeof request.socket & { encrypted?: boolean }).encrypted);
+    const secure = requestUsesSecureCookies(request, publicOrigin);
     respond(response, 200, { data: { actor } }, { "set-cookie": cookie(session.token, secure) });
     return true;
   }
   if (method === "POST" && path === "/api/v1/auth/logout") {
     await revokeSession(pool, readSessionToken(request.headers.cookie));
-    const secure = Boolean((request.socket as typeof request.socket & { encrypted?: boolean }).encrypted);
+    const secure = requestUsesSecureCookies(request, publicOrigin);
     respond(response, 204, undefined, { "set-cookie": cookie("", secure, 0) });
     return true;
   }
