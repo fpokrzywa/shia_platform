@@ -1,0 +1,31 @@
+{
+  "packKey": "engagement-walkthrough-v1",
+  "templates": [
+    {
+      "templateKey": "sample-apprenticeship",
+      "sourceFile": "templates/apprenticeship.v1.json"
+    },
+    {
+      "templateKey": "sample-independent-delivery",
+      "sourceFile": "templates/independent-delivery.v1.json"
+    }
+  ],
+  "clients": [
+    { "key": "northstar", "name": "[Sample] Northstar Utilities" },
+    { "key": "harbor", "name": "[Sample] Harbor Health Network" }
+  ],
+  "engagements": [
+    {
+      "key": "apprenticeship-walkthrough",
+      "clientKey": "northstar",
+      "templateKey": "sample-apprenticeship",
+      "title": "[Sample] Field engineering apprenticeship"
+    },
+    {
+      "key": "independent-walkthrough",
+      "clientKey": "harbor",
+      "templateKey": "sample-independent-delivery",
+      "title": "[Sample] Independent operational delivery"
+    }
+  ]
+}

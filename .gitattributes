@@ -1,0 +1,3 @@
+* text=auto eol=lf
+# Migration checksums cover exact bytes; never normalize applied SQL.
+migrations/*.sql -text

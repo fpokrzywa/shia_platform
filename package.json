@@ -1,0 +1,38 @@
+{
+  "name": "shi-agentic-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p apps/web/tsconfig.json && vite build apps/web",
+    "dev": "tsx apps/api/src/server.ts",
+    "start": "node dist/apps/api/src/server.js",
+    "db:migrate": "tsx apps/api/src/migrate.ts",
+    "test": "node --import tsx --test \"apps/**/*.test.ts\" \"packages/**/*.test.ts\" \"tests/**/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json",
+    "build:web": "vite build apps/web",
+    "test:e2e": "node --import tsx tests/e2e/workspace.e2e.ts && node --import tsx tests/e2e/samples.e2e.ts && node --import tsx tests/e2e/work.e2e.ts && node --import tsx tests/e2e/readiness.e2e.ts && node --import tsx tests/e2e/delivery.e2e.ts && node --import tsx tests/e2e/training.e2e.ts && node --import tsx tests/e2e/training-designer.e2e.ts && node --import tsx tests/e2e/knowledge.e2e.ts && node --import tsx tests/e2e/discovery.e2e.ts && node --import tsx tests/e2e/template-designer.e2e.ts && node --import tsx tests/e2e/practice.e2e.ts && node --import tsx tests/e2e/practice-authoring.e2e.ts && node --import tsx tests/e2e/ontology.e2e.ts",
+    "auth:bootstrap": "tsx apps/api/src/auth/bootstrap.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pg": "^8.13.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "prettier": "3.9.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "7.3.6"
+  }
+}

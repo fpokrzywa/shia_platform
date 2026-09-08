@@ -1,0 +1,105 @@
+{
+  "templateKey": "apprenticeship",
+  "version": 1,
+  "state": "draft",
+  "name": "SHI apprenticeship",
+  "purpose": "A structured apprenticeship engagement with two ten-working-day camps, supervised delivery, and learning synthesis.",
+  "roles": [
+    { "key": "shi-engagement-lead", "name": "SHI engagement lead" },
+    { "key": "shi-technical-lead", "name": "SHI technical lead" },
+    { "key": "palantir-technical-reviewer", "name": "Palantir technical design reviewer" },
+    { "key": "client-sponsor", "name": "Client sponsor" }
+  ],
+  "stages": [
+    {
+      "key": "pre-camp-preparation",
+      "name": "Pre-camp preparation",
+      "accountableRoleKey": "shi-engagement-lead",
+      "durationWorkingDays": 10,
+      "dependsOn": [],
+      "checklistItemKeys": ["client-brief", "stakeholder-map", "operational-problem", "sample-data-register", "access-quality-checks", "proposed-scope", "camp-plan"]
+    },
+    {
+      "key": "camp-1-shadowing",
+      "name": "Camp 1 — shadowing",
+      "accountableRoleKey": "shi-technical-lead",
+      "durationWorkingDays": 10,
+      "dependsOn": ["pre-camp-preparation"],
+      "checklistItemKeys": ["learning-entries-camp-1", "architecture-rationale", "camp-1-test-results", "camp-1-review"]
+    },
+    {
+      "key": "camp-2-preparation",
+      "name": "Camp 2 preparation and readiness review",
+      "accountableRoleKey": "shi-engagement-lead",
+      "dependsOn": ["camp-1-shadowing"],
+      "checklistItemKeys": ["carryover-items", "camp-2-scope-participants-data-access"]
+    },
+    {
+      "key": "camp-2-assisted-delivery",
+      "name": "Camp 2 — assisted delivery",
+      "accountableRoleKey": "shi-technical-lead",
+      "durationWorkingDays": 10,
+      "dependsOn": ["camp-2-preparation"],
+      "checklistItemKeys": ["supervised-implementation", "shi-backlog", "camp-2-testing", "co-presentation"]
+    },
+    {
+      "key": "acceptance-and-handover",
+      "name": "Acceptance and handover",
+      "accountableRoleKey": "shi-engagement-lead",
+      "dependsOn": ["camp-2-assisted-delivery"],
+      "checklistItemKeys": ["deliverables-review", "user-acceptance", "known-limitations", "handover-ownership"]
+    },
+    {
+      "key": "learning-synthesis-closeout",
+      "name": "Learning synthesis and closeout",
+      "accountableRoleKey": "shi-technical-lead",
+      "durationWorkingDays": 5,
+      "dependsOn": ["acceptance-and-handover"],
+      "checklistItemKeys": ["retrospective", "recipe-candidates", "engineer-readiness", "follow-up-actions"]
+    }
+  ],
+  "checklistItems": [
+    { "key": "client-brief", "stageKey": "pre-camp-preparation", "name": "Client brief", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": [], "evidenceRequirementKeys": ["readiness-review"] },
+    { "key": "stakeholder-map", "stageKey": "pre-camp-preparation", "name": "Stakeholder map", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-brief"] },
+    { "key": "operational-problem", "stageKey": "pre-camp-preparation", "name": "Agreed operational problem", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-brief"], "evidenceRequirementKeys": ["pilot-acceptance-criteria"] },
+    { "key": "sample-data-register", "stageKey": "pre-camp-preparation", "name": "Sample-data register", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["operational-problem"], "evidenceRequirementKeys": ["access-and-quality"] },
+    { "key": "access-quality-checks", "stageKey": "pre-camp-preparation", "name": "Access and quality checks", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["sample-data-register"], "evidenceRequirementKeys": ["access-and-quality"] },
+    { "key": "proposed-scope", "stageKey": "pre-camp-preparation", "name": "Proposed scope", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["operational-problem"], "evidenceRequirementKeys": ["pilot-acceptance-criteria"] },
+    { "key": "camp-plan", "stageKey": "pre-camp-preparation", "name": "Camp plan", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["proposed-scope"], "evidenceRequirementKeys": ["readiness-review"] },
+    { "key": "learning-entries-camp-1", "stageKey": "camp-1-shadowing", "name": "Reviewed learning entries", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["camp-plan"] },
+    { "key": "architecture-rationale", "stageKey": "camp-1-shadowing", "name": "Architecture rationale", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["learning-entries-camp-1"] },
+    { "key": "camp-1-test-results", "stageKey": "camp-1-shadowing", "name": "Camp 1 test results", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["architecture-rationale"] },
+    { "key": "camp-1-review", "stageKey": "camp-1-shadowing", "name": "Camp 1 review", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["camp-1-test-results"] },
+    { "key": "carryover-items", "stageKey": "camp-2-preparation", "name": "Resolved carryover items", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["camp-1-review"] },
+    { "key": "camp-2-scope-participants-data-access", "stageKey": "camp-2-preparation", "name": "Reconfirmed scope, participants, data, and access", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["carryover-items"], "evidenceRequirementKeys": ["readiness-review"] },
+    { "key": "supervised-implementation", "stageKey": "camp-2-assisted-delivery", "name": "Supervised data and action implementation", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["camp-2-scope-participants-data-access"] },
+    { "key": "shi-backlog", "stageKey": "camp-2-assisted-delivery", "name": "SHI backlog ownership", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["supervised-implementation"] },
+    { "key": "camp-2-testing", "stageKey": "camp-2-assisted-delivery", "name": "Camp 2 testing", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["supervised-implementation"], "evidenceRequirementKeys": ["test-evidence"] },
+    { "key": "co-presentation", "stageKey": "camp-2-assisted-delivery", "name": "Co-presentation", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["camp-2-testing"], "evidenceRequirementKeys": ["demo-record"] },
+    { "key": "deliverables-review", "stageKey": "acceptance-and-handover", "name": "Agreed deliverables review", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["co-presentation"] },
+    { "key": "user-acceptance", "stageKey": "acceptance-and-handover", "name": "Client acceptance evidence or non-acceptance decision", "ownerRoleKey": "client-sponsor", "required": true, "dependsOn": ["deliverables-review"], "evidenceRequirementKeys": ["client-acceptance"] },
+    { "key": "known-limitations", "stageKey": "acceptance-and-handover", "name": "Known limitations", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["deliverables-review"] },
+    { "key": "handover-ownership", "stageKey": "acceptance-and-handover", "name": "Handover ownership", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["user-acceptance"] },
+    { "key": "retrospective", "stageKey": "learning-synthesis-closeout", "name": "Retrospective", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["handover-ownership"] },
+    { "key": "recipe-candidates", "stageKey": "learning-synthesis-closeout", "name": "Five recipe candidates", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["retrospective"] },
+    { "key": "engineer-readiness", "stageKey": "learning-synthesis-closeout", "name": "Engineer readiness assessment", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["recipe-candidates"] },
+    { "key": "follow-up-actions", "stageKey": "learning-synthesis-closeout", "name": "Assigned follow-up actions", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["engineer-readiness"] }
+  ],
+  "evidenceRequirements": [
+    { "key": "readiness-review", "name": "Readiness review, open risks, and plan" },
+    { "key": "pilot-acceptance-criteria", "name": "Agreed pilot acceptance criteria" },
+    { "key": "access-and-quality", "name": "Access and data quality checks" },
+    { "key": "test-evidence", "name": "Test evidence" },
+    { "key": "demo-record", "name": "Demo record" },
+    { "key": "client-acceptance", "name": "Client acceptance or attributed non-acceptance" }
+  ],
+  "gateRules": [
+    { "type": "hard-prerequisite", "itemKey": "operational-problem" },
+    { "type": "hard-prerequisite", "itemKey": "proposed-scope" },
+    { "type": "hard-prerequisite", "itemKey": "sample-data-register" },
+    { "type": "hard-prerequisite", "itemKey": "access-quality-checks" },
+    { "type": "hard-prerequisite", "itemKey": "camp-plan" },
+    { "type": "waivable-prerequisite", "itemKey": "stakeholder-map", "exceptionOwnerRoleKey": "shi-engagement-lead" },
+    { "type": "stage-complete", "stageKey": "pre-camp-preparation" }
+  ]
+}

@@ -1,0 +1,224 @@
+.knowledge {
+  display: grid;
+  gap: 1rem;
+}
+.knowledge-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+  border-bottom: 3px solid #153f50;
+  padding-bottom: 1rem;
+}
+.knowledge-header h2,
+.knowledge h3,
+.knowledge h4 {
+  margin: 0;
+}
+.knowledge-header p {
+  max-width: 48rem;
+  margin: 0.35rem 0;
+  color: #58666b;
+}
+.knowledge-tools {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #edf4f5;
+  border-left: 4px solid #3f7b7d;
+}
+.knowledge-tools label {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.knowledge-tools select {
+  min-width: 10rem;
+}
+.knowledge-layout {
+  display: grid;
+  grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr);
+  min-height: 28rem;
+  border: 1px solid #ccd7d9;
+  background: #fff;
+}
+.knowledge-index {
+  display: grid;
+  align-content: start;
+  border-right: 1px solid #ccd7d9;
+  background: #f5f8f8;
+}
+.knowledge-index > button {
+  display: grid;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 0.85rem;
+  border: 0;
+  border-bottom: 1px solid #dce4e5;
+  background: transparent;
+}
+.knowledge-index > button.selected {
+  background: #fff;
+  box-shadow: inset 4px 0 #bc5b32;
+}
+.knowledge-index span {
+  font-size: 0.76rem;
+  color: #5d6d71;
+}
+.knowledge-state {
+  display: inline-block;
+  width: max-content;
+  border-radius: 2rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+  color: #31535d;
+  background: #deeaec;
+}
+.knowledge-state.submitted {
+  color: #76500f;
+  background: #fff0c9;
+}
+.knowledge-state.published {
+  color: #1d6042;
+  background: #dff2e8;
+}
+.knowledge-state.retired {
+  color: #666;
+  background: #e9e9e9;
+}
+.knowledge-reader {
+  padding: 1.5rem clamp(1rem, 3vw, 2.5rem);
+}
+.knowledge-reader article > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.knowledge-reader h3 {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1.08;
+  margin: 0.55rem 0;
+}
+.knowledge-reader header p {
+  color: #5f696d;
+  max-width: 46rem;
+}
+.version-mark {
+  text-align: right;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+.knowledge-body {
+  max-width: 72ch;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin: 2rem 0;
+  white-space: pre-wrap;
+}
+.review-note {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1rem;
+  border-left: 4px solid #3f7b7d;
+  background: #edf4f5;
+}
+.knowledge-actions {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  border-top: 1px solid #d9e1e2;
+  padding-top: 1rem;
+}
+.knowledge-actions details,
+.knowledge-create {
+  border: 1px solid #ccd7d9;
+  padding: 0.65rem;
+  background: #fff;
+}
+.knowledge-actions summary,
+.knowledge-create summary {
+  cursor: pointer;
+  font-weight: 750;
+}
+.knowledge form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.75rem;
+}
+.knowledge label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.knowledge input,
+.knowledge select,
+.knowledge textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #afbec1;
+  border-radius: 0.25rem;
+  padding: 0.55rem;
+  font: inherit;
+}
+.knowledge textarea {
+  min-height: 6rem;
+}
+.knowledge-wide {
+  grid-column: 1/-1;
+}
+.knowledge fieldset {
+  border: 1px solid #d5dfe0;
+}
+.source-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.linked-mark {
+  padding: 0.5rem;
+  color: #1d6042;
+  font-weight: 700;
+}
+.knowledge-empty {
+  margin: 5rem auto;
+  max-width: 28rem;
+  text-align: center;
+  color: #667478;
+}
+@media (max-width: 800px) {
+  .knowledge-layout {
+    grid-template-columns: 1fr;
+  }
+  .knowledge-index {
+    border-right: 0;
+    border-bottom: 1px solid #ccd7d9;
+    max-height: 18rem;
+    overflow: auto;
+  }
+  .knowledge-tools,
+  .knowledge-header {
+    display: grid;
+  }
+  .knowledge-tools select {
+    min-width: 0;
+  }
+  .knowledge form,
+  .source-row {
+    grid-template-columns: 1fr;
+  }
+  .knowledge-wide {
+    grid-column: auto;
+  }
+  .knowledge-reader article > header {
+    display: grid;
+  }
+  .version-mark {
+    text-align: left;
+  }
+}

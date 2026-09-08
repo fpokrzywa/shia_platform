@@ -1,0 +1,255 @@
+.training {
+  display: grid;
+  gap: 1rem;
+}
+.training [hidden] {
+  display: none !important;
+}
+.training-header,
+.assignment-detail > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.training-header h2,
+.training h3,
+.training h4 {
+  margin: 0;
+}
+.training-header p,
+.assignment-detail header p {
+  margin: 0.25rem 0;
+  color: #626976;
+}
+.training-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #d9dce2;
+}
+.training-tabs button {
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  padding: 0.65rem 1rem;
+}
+.training-tabs button.selected {
+  border-color: #722e63;
+  color: #722e63;
+}
+.training-panel {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.34fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+.training-panel:has(> h3) {
+  grid-template-columns: 1fr;
+}
+.training-set-list,
+.training-column,
+.training-items {
+  display: grid;
+  gap: 0.6rem;
+}
+.training-column {
+  align-content: start;
+}
+.training-set-list article,
+.assignment,
+.assignment-detail,
+.training-author {
+  border: 1px solid #dadde3;
+  border-radius: 0.7rem;
+  background: #fff;
+  padding: 0.8rem;
+}
+.training-set-list article {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.training-set-list p,
+.assignment small {
+  display: block;
+  color: #626976;
+  margin: 0.2rem 0;
+}
+.assignment {
+  text-align: left;
+}
+.assignment.selected {
+  border-color: #722e63;
+  background: #faf4f9;
+}
+.assignment-detail {
+  display: grid;
+  gap: 1rem;
+}
+.training-items details,
+.learning-support details,
+.assignment-detail section {
+  border-top: 1px solid #e0e2e7;
+  padding: 0.7rem 0;
+}
+.training-items summary {
+  cursor: pointer;
+}
+.training-items summary span,
+.training-items summary small {
+  display: block;
+}
+.training-items summary small {
+  color: #68707a;
+  margin-top: 0.2rem;
+}
+.training form,
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+}
+.training label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.training input,
+.training select,
+.training textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #c9cdd4;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  font: inherit;
+}
+.training textarea {
+  min-height: 5rem;
+}
+.training .wide {
+  grid-column: 1/-1;
+}
+.training fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  border: 1px solid #d9dce2;
+  border-radius: 0.6rem;
+  margin: 0.75rem 0;
+}
+.training .check {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.training .check input {
+  width: auto;
+}
+.learning-support {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.evidence {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: #f7f8fa;
+  padding: 0.5rem;
+}
+.assignment-detail blockquote {
+  border-left: 3px solid #8b477c;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
+}
+.assignment-detail footer {
+  color: #68707a;
+  font-size: 0.8rem;
+}
+.assessment {
+  border: 1px solid #dfe2e7;
+  border-radius: 0.5rem;
+  padding: 0.65rem;
+  margin: 0.5rem 0;
+}
+.assessment span {
+  display: block;
+  color: #8d3b30;
+  font-weight: 700;
+}
+.assessment.stale {
+  border-left: 4px solid #b85842;
+  background: #fff8f4;
+}
+@media (max-width: 800px) {
+  .training-panel,
+  .learning-support {
+    grid-template-columns: 1fr;
+  }
+  .training form,
+  .training-grid,
+  .training fieldset {
+    grid-template-columns: 1fr;
+  }
+  .training .wide {
+    grid-column: auto;
+  }
+  .training-header,
+  .assignment-detail > header {
+    display: grid;
+  }
+}
+.training-set-actions,
+.training-order-actions,
+.training-editor-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.training-editor {
+  border: 1px solid #cfc4cc;
+  border-radius: 0.8rem;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(62, 35, 55, 0.08);
+}
+.training-editor > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.training-editor > header p {
+  margin: 0.25rem 0;
+  color: #626976;
+}
+.training-editor form {
+  display: block;
+}
+.training-editor fieldset {
+  position: relative;
+}
+.training-order-actions {
+  grid-column: 1/-1;
+}
+.training-reason {
+  margin-top: 1rem;
+}
+.training-editor-actions {
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+@media (max-width: 800px) {
+  .training-editor > header {
+    display: grid;
+  }
+  .training-set-list article {
+    display: grid;
+  }
+  .training-set-actions {
+    justify-content: flex-start;
+  }
+}

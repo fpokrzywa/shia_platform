@@ -1,0 +1,132 @@
+.template-designer {
+  margin-top: 1rem;
+  border: 1px solid #b8c8ce;
+  background: #f6fafb;
+  padding: 0.8rem;
+}
+.template-designer > summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: #173e50;
+}
+.template-designer > form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.template-designer form > header {
+  border-left: 5px solid #bc5b32;
+  padding-left: 1rem;
+}
+.template-designer h3,
+.template-designer h4 {
+  margin: 0;
+}
+.template-designer p {
+  color: #5d696e;
+  margin: 0.3rem 0;
+}
+.designer-basics,
+.designer-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.designer-section {
+  display: grid;
+  gap: 0.7rem;
+  border-top: 2px solid #244f60;
+  padding-top: 1rem;
+}
+.designer-section > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.designer-card {
+  position: relative;
+  border: 1px solid #c7d3d7;
+  background: #fff;
+  padding: 1rem;
+}
+.designer-card legend {
+  font-weight: 800;
+  padding: 0 0.4rem;
+}
+.designer-card .order {
+  position: absolute;
+  right: 0.55rem;
+  top: -1rem;
+  display: flex;
+  gap: 0.25rem;
+  background: #fff;
+  padding: 0.15rem;
+}
+.designer-card .order button {
+  padding: 0.25rem 0.45rem;
+}
+.template-designer label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.template-designer input,
+.template-designer select,
+.template-designer textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #aebfc5;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font: inherit;
+}
+.template-designer textarea {
+  min-height: 4.5rem;
+}
+.template-designer .wide,
+.designer-checks {
+  grid-column: 1/-1;
+}
+.designer-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  border: 1px dashed #c4d0d4;
+}
+.template-designer .check {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+.template-designer .check input {
+  width: auto;
+}
+.template-designer footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
+  padding: 1rem;
+  background: #e9f1f3;
+  border-left: 5px solid #244f60;
+}
+.template-designer footer textarea {
+  min-height: 4rem;
+}
+@media (max-width: 760px) {
+  .designer-basics,
+  .designer-card,
+  .template-designer footer {
+    grid-template-columns: 1fr;
+  }
+  .template-designer .wide,
+  .designer-checks {
+    grid-column: auto;
+  }
+  .designer-section > header {
+    display: grid;
+  }
+}

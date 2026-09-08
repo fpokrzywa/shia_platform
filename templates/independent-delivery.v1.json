@@ -1,0 +1,64 @@
+{
+  "templateKey": "independent-delivery",
+  "version": 1,
+  "state": "draft",
+  "name": "Independent SHI delivery",
+  "purpose": "A repeatable SHI delivery workflow from qualification through outcome follow-up and closeout.",
+  "roles": [
+    { "key": "shi-engagement-lead", "name": "SHI engagement lead" },
+    { "key": "shi-technical-lead", "name": "SHI technical lead" },
+    { "key": "client-sponsor", "name": "Client sponsor" }
+  ],
+  "stages": [
+    { "key": "qualification-discovery", "name": "Qualification and discovery", "accountableRoleKey": "shi-engagement-lead", "dependsOn": [], "checklistItemKeys": ["client-problem", "sponsor", "operational-action", "baseline-method", "data-inventory", "feasibility"] },
+    { "key": "scope-readiness", "name": "Scope and readiness", "accountableRoleKey": "shi-engagement-lead", "dependsOn": ["qualification-discovery"], "checklistItemKeys": ["scope-version", "exclusions", "estimates", "assigned-team", "prerequisites", "acceptance-criteria"] },
+    { "key": "design-build", "name": "Design and build", "accountableRoleKey": "shi-technical-lead", "dependsOn": ["scope-readiness"], "checklistItemKeys": ["solution-model", "assigned-activities", "decision-records", "implementation", "regular-reviews"] },
+    { "key": "validation-acceptance", "name": "Validation and acceptance", "accountableRoleKey": "shi-engagement-lead", "dependsOn": ["design-build"], "checklistItemKeys": ["user-scenarios", "failure-cases", "open-defects", "client-acceptance"] },
+    { "key": "handover-outcome-follow-up", "name": "Handover and outcome follow-up", "accountableRoleKey": "shi-engagement-lead", "dependsOn": ["validation-acceptance"], "checklistItemKeys": ["support-ownership", "guide", "metric-observations", "follow-up-dates"] },
+    { "key": "learning-closeout", "name": "Learning and closeout", "accountableRoleKey": "shi-technical-lead", "dependsOn": ["handover-outcome-follow-up"], "checklistItemKeys": ["lessons", "recipe-candidates", "scope-effort-review", "outstanding-obligations"] }
+  ],
+  "checklistItems": [
+    { "key": "client-problem", "stageKey": "qualification-discovery", "name": "Client problem", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": [] },
+    { "key": "sponsor", "stageKey": "qualification-discovery", "name": "Sponsor", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-problem"] },
+    { "key": "operational-action", "stageKey": "qualification-discovery", "name": "Operational action", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-problem"] },
+    { "key": "baseline-method", "stageKey": "qualification-discovery", "name": "Baseline method", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["operational-action"] },
+    { "key": "data-inventory", "stageKey": "qualification-discovery", "name": "Data inventory", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-problem"] },
+    { "key": "feasibility", "stageKey": "qualification-discovery", "name": "Feasibility decision", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["baseline-method", "data-inventory"] },
+    { "key": "scope-version", "stageKey": "scope-readiness", "name": "Scope version", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["feasibility"] },
+    { "key": "exclusions", "stageKey": "scope-readiness", "name": "Exclusions", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["scope-version"] },
+    { "key": "estimates", "stageKey": "scope-readiness", "name": "Estimates", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["scope-version"] },
+    { "key": "assigned-team", "stageKey": "scope-readiness", "name": "Assigned team", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["scope-version"] },
+    { "key": "prerequisites", "stageKey": "scope-readiness", "name": "Prerequisites", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["assigned-team"] },
+    { "key": "acceptance-criteria", "stageKey": "scope-readiness", "name": "Acceptance criteria", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["scope-version"], "evidenceRequirementKeys": ["acceptance-criteria-evidence"] },
+    { "key": "solution-model", "stageKey": "design-build", "name": "Solution model", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["prerequisites"] },
+    { "key": "assigned-activities", "stageKey": "design-build", "name": "Assigned activities", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["solution-model"] },
+    { "key": "decision-records", "stageKey": "design-build", "name": "Decision records", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["solution-model"] },
+    { "key": "implementation", "stageKey": "design-build", "name": "Implementation", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["assigned-activities"] },
+    { "key": "regular-reviews", "stageKey": "design-build", "name": "Regular reviews", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["implementation"] },
+    { "key": "user-scenarios", "stageKey": "validation-acceptance", "name": "User scenarios", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["regular-reviews"] },
+    { "key": "failure-cases", "stageKey": "validation-acceptance", "name": "Failure cases", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["user-scenarios"] },
+    { "key": "open-defects", "stageKey": "validation-acceptance", "name": "Open defects", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["failure-cases"] },
+    { "key": "client-acceptance", "stageKey": "validation-acceptance", "name": "Client acceptance or explicit rejection", "ownerRoleKey": "client-sponsor", "required": true, "dependsOn": ["open-defects"], "evidenceRequirementKeys": ["client-acceptance-evidence"] },
+    { "key": "support-ownership", "stageKey": "handover-outcome-follow-up", "name": "Support ownership", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-acceptance"] },
+    { "key": "guide", "stageKey": "handover-outcome-follow-up", "name": "Handover guide", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["support-ownership"] },
+    { "key": "metric-observations", "stageKey": "handover-outcome-follow-up", "name": "Metric observations", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["client-acceptance"] },
+    { "key": "follow-up-dates", "stageKey": "handover-outcome-follow-up", "name": "Outcome follow-up dates", "ownerRoleKey": "shi-engagement-lead", "required": true, "dependsOn": ["metric-observations"] },
+    { "key": "lessons", "stageKey": "learning-closeout", "name": "Lessons", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["follow-up-dates"] },
+    { "key": "recipe-candidates", "stageKey": "learning-closeout", "name": "Recipe candidates", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["lessons"] },
+    { "key": "scope-effort-review", "stageKey": "learning-closeout", "name": "Scope and effort review", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["lessons"] },
+    { "key": "outstanding-obligations", "stageKey": "learning-closeout", "name": "Outstanding obligations", "ownerRoleKey": "shi-technical-lead", "required": true, "dependsOn": ["scope-effort-review"] }
+  ],
+  "evidenceRequirements": [
+    { "key": "acceptance-criteria-evidence", "name": "Accepted scope and acceptance criteria" },
+    { "key": "client-acceptance-evidence", "name": "Client acceptance or attributed rejection" }
+  ],
+  "gateRules": [
+    { "type": "hard-prerequisite", "itemKey": "client-problem" },
+    { "type": "hard-prerequisite", "itemKey": "operational-action" },
+    { "type": "hard-prerequisite", "itemKey": "data-inventory" },
+    { "type": "hard-prerequisite", "itemKey": "prerequisites" },
+    { "type": "hard-prerequisite", "itemKey": "acceptance-criteria" },
+    { "type": "waivable-prerequisite", "itemKey": "baseline-method", "exceptionOwnerRoleKey": "shi-engagement-lead" },
+    { "type": "stage-complete", "stageKey": "scope-readiness" }
+  ]
+}
