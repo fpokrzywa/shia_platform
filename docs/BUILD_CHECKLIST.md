@@ -1,6 +1,6 @@
 # SHI Agentic build checklist
 
-Updated September 8, 2026. This is the application build checklist. The live tracker reads `docs/build-progress.json` every five seconds. Status changes reflect verification, not merely code being written. Release 14 is verified on the local workstation. Shared deployment and environment-specific operating decisions are not yet qualified.
+Updated September 9, 2026. This is the application build checklist. The live tracker reads its private build-progress record every five seconds. Status changes reflect verification, not merely code being written. Release 14 is verified on the local workstation and the owner-managed VPS has passed public health and authenticated read-only interface checks. Shared operating decisions are not yet qualified.
 
 ## Live and verified
 
@@ -58,13 +58,14 @@ The learner investigates and builds in an approved Palantir training environment
 - [ ] Document and rehearse deployment, upgrade and rollback procedures for the chosen shared environment.
 - [x] Confirm deployment destination and owner: the user installed the application on their Ubuntu VPS and manages PostgreSQL and private environment files.
 - [x] Verify deployed HTTPS liveness/readiness and correct sign-in origin handling. Public endpoint checks passed September 9; the user confirmed successful sign-in September 8.
+- [x] Verify the deployed signed-in interface without changing business data: navigation, portfolio, templates, company practice, training and knowledge screens render; template filters and archive categories are present; no browser warnings or errors appeared (September 9).
 - [ ] Qualify production secret storage, service supervision and the remaining environment-specific operating controls with the owner.
 - [ ] Confirm corporate identity provider and lifecycle requirements; local accounts do not constitute SSO.
 - [ ] Confirm retention/legal holds, alert destinations, backup storage/encryption and recovery objectives.
 
 The environment-specific decisions are listed in `docs/operations/OPERATIONAL_GAPS.md`. No automated deletion of business history is authorized or configured. Existing application data and secrets must remain preserved. Docker is outside the current scope.
 
-Deployment ownership is a user-managed handoff; SSH access is not a prerequisite for the assistant's PostgreSQL checks. The HTTPS proxy correction is published with explicit `PUBLIC_ORIGIN` configuration. A read-only deployed probe now reaches input validation instead of origin rejection. This does not substitute for authenticated end-to-end workflow validation or an environment-specific rollback rehearsal.
+Deployment ownership is a user-managed handoff; SSH access is not a prerequisite for the assistant's PostgreSQL checks. The HTTPS proxy correction is published with explicit `PUBLIC_ORIGIN` configuration. The deployment has passed an authenticated read-only interface check without creating, editing, publishing, or deleting records. That does not substitute for owner-led acceptance testing of business mutations or an environment-specific rollback rehearsal.
 
 ## Separate later increment
 
