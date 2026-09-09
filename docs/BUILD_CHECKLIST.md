@@ -56,11 +56,15 @@ The learner investigates and builds in an approved Palantir training environment
 - [x] Verify session cleanup dry run and explicit execution preserve active sessions and business history (`tests/integration/operations.postgres.test.ts`).
 - [x] Verify staged assets and migration manifests isolate the running release from subsequent builds (`tests/integration/staged-release.postgres.test.ts`).
 - [ ] Document and rehearse deployment, upgrade and rollback procedures for the chosen shared environment.
-- [ ] Confirm shared deployment destination, TLS, secret/database services and operating owner.
+- [x] Confirm deployment destination and owner: the user installed the application on their Ubuntu VPS and manages PostgreSQL and private environment files.
+- [x] Verify deployed HTTPS liveness/readiness and correct sign-in origin handling. Public endpoint checks passed September 9; the user confirmed successful sign-in September 8.
+- [ ] Qualify production secret storage, service supervision and the remaining environment-specific operating controls with the owner.
 - [ ] Confirm corporate identity provider and lifecycle requirements; local accounts do not constitute SSO.
 - [ ] Confirm retention/legal holds, alert destinations, backup storage/encryption and recovery objectives.
 
 The environment-specific decisions are listed in `docs/operations/OPERATIONAL_GAPS.md`. No automated deletion of business history is authorized or configured. Existing application data and secrets must remain preserved. Docker is outside the current scope.
+
+Deployment ownership is a user-managed handoff; SSH access is not a prerequisite for the assistant's PostgreSQL checks. The HTTPS proxy correction is published with explicit `PUBLIC_ORIGIN` configuration. A read-only deployed probe now reaches input validation instead of origin rejection. This does not substitute for authenticated end-to-end workflow validation or an environment-specific rollback rehearsal.
 
 ## Separate later increment
 
