@@ -55,7 +55,7 @@ The learner investigates and builds in an approved Palantir training environment
 - [x] Release and verify masked operator password recovery, migration-current health checks and aggregate operational status.
 - [x] Verify session cleanup dry run and explicit execution preserve active sessions and business history (`tests/integration/operations.postgres.test.ts`).
 - [x] Verify staged assets and migration manifests isolate the running release from subsequent builds (`tests/integration/staged-release.postgres.test.ts`).
-- [ ] Document and rehearse deployment, upgrade and rollback procedures for the chosen shared environment.
+- [ ] Rehearse the documented [Ubuntu VPS deployment, upgrade and rollback procedure](operations/VPS_RUNBOOK.md) for the chosen shared environment.
 - [x] Confirm deployment destination and owner: the user installed the application on their Ubuntu VPS and manages PostgreSQL and private environment files.
 - [x] Verify deployed HTTPS liveness/readiness and correct sign-in origin handling. Public endpoint checks passed September 9; the user confirmed successful sign-in September 8.
 - [x] Verify the deployed signed-in interface without changing business data: navigation, portfolio, templates, company practice, training and knowledge screens render; template filters and archive categories are present; no browser warnings or errors appeared (September 9).

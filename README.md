@@ -39,6 +39,7 @@ Database tests create and remove their own disposable databases. The test databa
 - [Build checklist](docs/BUILD_CHECKLIST.md)
 - [Validation walkthrough](docs/VALIDATION_WALKTHROUGH.md)
 - [Local setup and release staging](docs/operations/LOCAL_SETUP.md)
+- [Ubuntu VPS deployment runbook](docs/operations/VPS_RUNBOOK.md)
 - [Backup and recovery](docs/operations/RECOVERY.md)
 - [Shared deployment decisions](docs/operations/OPERATIONAL_GAPS.md)
 
