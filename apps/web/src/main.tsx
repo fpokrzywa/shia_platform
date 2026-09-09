@@ -22,6 +22,7 @@ import { Ontology, OntologyDiagram } from "./Ontology";
 import { EngagementWork } from "./EngagementWork";
 import { DeliveryWork } from "./DeliveryWork";
 import { ReadinessReview } from "./ReadinessReview";
+import { deploymentLabel } from "./deployment-label";
 
 const message = (error: unknown) =>
   error instanceof Error
@@ -33,6 +34,7 @@ const fields = (event: FormEvent<HTMLFormElement>) => {
 };
 const label = (value: string) =>
   value.replaceAll("_", " ").replaceAll("-", " ");
+const environmentLabel = deploymentLabel(import.meta.env.VITE_DEPLOYMENT_LABEL);
 
 function App() {
   const [openEngagementId,setOpenEngagementId]=useState<string|undefined>(undefined);
@@ -125,7 +127,7 @@ function App() {
       <div className="workspace">
         <header>
           <span>Practice delivery</span>
-          <span className="local">Local development</span>
+          <span className="local">{environmentLabel}</span>
         </header>
         <main>
           {error && (
@@ -1040,6 +1042,5 @@ function EngagementKnowledge({engagementId,user}:{engagementId:string;user:User}
  useEffect(()=>{void refresh().catch(e=>setError(message(e)));},[engagementId]);
  return <section><button onClick={()=>void refresh().catch(e=>setError(message(e)))}>Refresh lesson sources</button>{error&&<p role="alert" className="error">{error}</p>}<Knowledge user={user} engagementId={engagementId} sources={sources}/></section>;
 }
-
 
 
